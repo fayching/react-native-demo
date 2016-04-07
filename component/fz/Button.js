@@ -7,6 +7,7 @@ import React, {
     TouchableOpacity,
 } from 'react-native';
 import TYPO from './Typo.css';
+import styles from './Button.css';
 export default class Button extends Component {
     constructor(props) {
         super(props);
@@ -34,16 +35,3 @@ export default class Button extends Component {
         
     }
 }
-const styles = {
-    button: {
-        height: 36,
-        alignItems: 'center',
-        justifyContent: 'center',
-        paddingTop: 6,
-        paddingBottom: 6,
-        paddingLeft: 16,
-        paddingRight: 16,
-        margin: 4,
-        borderRadius: 2,
-    }
-};
