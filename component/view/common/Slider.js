@@ -2,7 +2,7 @@
 
 // var TimerMixin = require('react-timer-mixin');
 import Dimensions from 'Dimensions';
-import styles from './Slider.css';
+import styles from '../../style/common/Slider.css';
 
 import React, {
     Component,

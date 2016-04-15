@@ -1,5 +1,5 @@
 /**
- * Tmall 3c APP
+ *  APP
  * https://github.com/facebook/react-native
  */
 'use strict';
@@ -8,7 +8,7 @@ import React, {
     Component,
     View,
 } from 'react-native';
-import Home from './component/home/Home';
+import Home from './component/view/home/Home';
 
 
 export default class App extends Component{

@@ -6,8 +6,8 @@ import React, {
     Text,
     TouchableOpacity,
 } from 'react-native';
-import TYPO from './Typo.css';
-import styles from './Button.css';
+import TYPO from '../style/Typo.css';
+import styles from '../style/Button.css';
 export default class Button extends Component {
     constructor(props) {
         super(props);
