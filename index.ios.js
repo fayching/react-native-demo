@@ -8,15 +8,15 @@ import React, {
     Component,
     View,
 } from 'react-native';
-import Home from './component/view/home/Home';
-
+// import Home from './component/view/home/Home';
+import LayoutExample from './component/fz/demo/LayoutExample';
 
 export default class App extends Component{
 
     render() {
 
         return(
-            <Home />
+            <LayoutExample />
         );
       
     }
