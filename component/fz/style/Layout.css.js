@@ -1,4 +1,25 @@
 module.exports = require('react-native').StyleSheet.create({
+  leftTop:{
+    flexDirection:'row',
+    justifyContent: 'flex-start',
+  },
+  centerTop:{
+    flexDirection:'row',
+    justifyContent: 'center',
+  },
+  rightTop:{
+    flexDirection:'row',
+    justifyContent: 'flex-end',
+  },
+  leftCenter:{
+    flexDirection:'row',
+    alignItems: 'center',
+  },
+  center:{
+    flexDirection:'row',
+    alignItems: 'center',
+  },
+
   base:{
     color: '#000',
     lineHeight: 24,
