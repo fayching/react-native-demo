@@ -1,0 +1,7 @@
+{
+    "source": "./component/qui/view/",
+    "destination": "../qui-doc",
+    "plugins": [
+        {"name": "esdoc-es7-plugin"}
+    ]
+}

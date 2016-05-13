@@ -3,15 +3,15 @@
  * https://github.com/facebook/react-native
  */
 
-import React, {
+import React, { Component } from 'react';
+import {
   AppRegistry,
-  Component,
   StyleSheet,
   Text,
   View
 } from 'react-native';
 
-class read extends Component {
+class FrozenRN extends Component {
   render() {
     return (
       <View style={styles.container}>
@@ -48,4 +48,4 @@ const styles = StyleSheet.create({
   },
 });
 
-AppRegistry.registerComponent('read', () => read);
+AppRegistry.registerComponent('FrozenRN', () => FrozenRN);

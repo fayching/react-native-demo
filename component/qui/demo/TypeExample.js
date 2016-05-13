@@ -7,7 +7,7 @@ import React, {
     Platform,
     Text
 } from 'react-native';
-import Type from '../style/Type.css';
+import Type from '../style/Typo.css';
 
 export default class TypeExample extends Component {
     constructor(props) {

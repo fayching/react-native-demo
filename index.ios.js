@@ -1,26 +1,42 @@
 /**
- *  APP
- * https://github.com/facebook/react-native
+ * QUI React Native App
  */
-'use strict';
-import React, {
-    AppRegistry,
-    Component,
-    View,
-} from 'react-native';
-// import Home from './component/view/home/Home';
-import LayoutExample from './component/fz/demo/LayoutExample';
 
-export default class App extends Component{
+ import React, {
+     AppRegistry,
+     Component,
+     View,
+     StyleSheet,
+ } from 'react-native';
+ import Home from './component/app/home/Home';
 
+class FrozenRN extends Component {
     render() {
 
         return(
-            <LayoutExample />
+            <Home />
         );
-      
+
     }
 }
 
+const styles = StyleSheet.create({
+  container: {
+    flex: 1,
+    justifyContent: 'center',
+    alignItems: 'center',
+    backgroundColor: '#F5FCFF',
+  },
+  welcome: {
+    fontSize: 20,
+    textAlign: 'center',
+    margin: 10,
+  },
+  instructions: {
+    textAlign: 'center',
+    color: '#333333',
+    marginBottom: 5,
+  },
+});
 
-AppRegistry.registerComponent('read', () => App);
+AppRegistry.registerComponent('FrozenRN', () => FrozenRN);
