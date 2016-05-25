@@ -4,249 +4,101 @@ import React, {
     StyleSheet,
     Text,
     View,
-    ScrollView
+    ScrollView,
+    ListView
 } from 'react-native';
 
+import Data from './dataSource';
 import Avatar from '../view/Avatar';
-import List from '../view/List';
+import Cell from '../view/Cell';
 import Divider from '../view/Divider';
-const data = {
-    'single': {
-        'avatarText': [
-            {
-                'captionText': '1.faycheng  2月12日',
-                'avatar': 'https://s3.amazonaws.com/uifaces/faces/twitter/ok/128.jpg',
-                'size': 50,
-                'primaryText': '这本书太赞了，每次看都有不一样的体会和感悟，超级喜欢！期待大结局。',
-                'secondaryText': '这是内容，加ui-nowrap可以超出长度截断这是内容',
-                'badge': 'new'
-            },
-            {
-                'captionText': '1.faycheng  2月12日',
-                'avatar': 'https://s3.amazonaws.com/uifaces/faces/twitter/ok/128.jpg',
-                'size': 28,
-                'primaryText': '这本书太赞了，每次看都有不一样的体会和感悟，超级喜欢！期待大结局。',
-                'secondaryText': '这是内容，加ui-nowrap可以超出长度截断这是内容，加ui-nowrap可以超出长度截断',
-                'dot': true
-            },
-            {
-                'captionText': '1.faycheng  2月12日',
-                'avatar': 'https://s3.amazonaws.com/uifaces/faces/twitter/ok/128.jpg',
-                'size': 40,
-                'primaryText': '全屏滚动效果H5FullscreenPage.js测试版给力上线',
-                'secondaryText': '这是内容，加ui-nowrap可以超出长度截断这是内容',
-                'action': '使用中'
-            },
-            {
-                'captionText': '1.faycheng  2月12日',
-                'avatar': 'https://s3.amazonaws.com/uifaces/faces/twitter/ok/128.jpg',
-                'size': 40,
-                'primaryText': '长文字长文字长文字长文字长文字长文字长文字长文字长文字长文字长文字长文字长文字长文字长文字长文字',
-                'secondaryText': '这是内容，加ui-nowrap可以超出长度截断这是内容'
-            },]
-    }
-};
+import Icon from '../view/Icon';
+import Button from '../view/Button';
 
 export default class ListExample extends Component {
+    constructor(props) {
+        super(props);
+        this._renderRow = this._renderRow.bind(this);
+        this.state = {
+            dataSource: new ListView.DataSource({
+                rowHasChanged: (row1, row2) => row1 !== row2,
+            })
+        };
+    }
+
+    componentDidMount() {
+        this.appInit();
+    }
+
+    appInit(){
+        var that = this;
+        that.setState({
+            dataSource: that.state.dataSource.cloneWithRows(Data)
+        });
+    }
+
+
+    _renderRow(rowData: string, sectionID: number, rowID: string) {
+        let leftIcon = rowData.avatar==null ? null : <Avatar src={rowData.avatar} size={rowData.size}/>;
+        return (
+            <Cell
+                leftIcon={leftIcon}
+                captionText={rowData.captionText}
+                primaryText={rowData.primaryText}
+                primaryTextLines={rowData.primaryTextLines}
+                subText={rowData.subText}
+                subTextLines={rowData.subTextLines}
+                rowID={rowID}
+                total={this.state.dataSource._cachedRowCount}
+                isListBorder={true}
+                rightIcon={
+                   rowData.badge && (<View style={styles.badge}><Text style={styles.badgeText}>{rowData.badge}</Text></View>) ||
+
+                   rowData.dot &&   (<View style={styles.dot}></View>) ||
+
+                   rowData.arrow && rowData.button && (<View style={{flexDirection:'row', alignItems: 'center',}}><Button theme="default" value={rowData.button} /><Icon name="arrow" /></View>) ||
+
+                   rowData.button && (<Button theme="default" value={rowData.button} />) ||
+
+                   rowData.arrow && (<View style={{flexDirection:'row', alignItems: 'center'}}><Text style={{fontSize:16,marginRight:5}}>{rowData.action}</Text><Icon name="arrow" /></View>) ||
+
+                   rowData.action && (<Text style={{fontSize:16}}>{rowData.action}</Text>)
+
+                }
+            />
+        );
+    }
+
+
     render() {
         return (
-            <ScrollView contentContainerStyle={styles.contentContainer}>
-                <View style={styles.container}>
-                    <View style={styles.subHeader}><Text style={styles.subheaderText}>简单列表</Text></View>
-                    {data.single.avatarText.map((list, i) =>(
-                        <View>
-                            {i<=1 &&
-                            <List
-                                captionText={list.captionText}
-                                primaryText={list.primaryText}
-                                primaryTextLines={2}
-                                total={2}
-                                index={i}
-                                isListBorder={true}
-                                rightIcon={
-                                    <View><Text>使用中</Text></View>
-                                }
-                            />
-                            }
-                        </View>
-                    ))}
-
-                    <View style={styles.subHeader}><Text style={styles.subheaderText}>右边有内容的列表</Text></View>
-                    {data.single.avatarText.map((list,i) => (
-                        <View>
-                            {i <= 2 &&
-                            <List
-                                primaryText={list.primaryText}
-                                total={3}
-                                index={i}
-                                isListBorder={true}
-                                rightIcon={
-                                    list.badge && (<View style={styles.badge}><Text style={styles.badgeText}>{list.badge}</Text></View>) ||
-
-                                    list.dot &&   (<View style={styles.dot}></View>) ||
-
-                                    list.action && (<Text style={{fontSize:16}}>{list.action}</Text>)
-                                }
-                            />
-                            }
-                        </View>
-                    ))}
-
-
-                    <View style={styles.subHeader}><Text style={styles.subheaderText}>文字列表</Text></View>
-                    {data.single.avatarText.map((list,i) => (
-                        <View>
-                            {i ==3 &&
-                            <List
-                                primaryText={list.primaryText}
-                                primaryTextLines={3}
-                                total={1}
-                                index={0}
-                                isListBorder={true}
-                                rightIcon={
-                                    <View style={{flexDirection:'row'}}>
-                                        <Text>男</Text>
-                                        <Text>></Text>
-                                    </View>
-                                }
-                            />
-                            }
-                        </View>
-                    ))}
-
-                    <View style={styles.subHeader}><Text style={styles.subheaderText}>图文一行列表</Text></View>
-                    {data.single.avatarText.map((list,i) => (
-                        <View>
-                            {i <=1 &&
-                            <List
-                                leftIcon={<Avatar src={list.avatar} size={50}/>}
-                                primaryText={list.primaryText}
-                                primaryTextLines={1}
-                                total={2}
-                                index={i}
-                                isListBorder={true}
-                                rightIcon={
-                                    <View style={{flexDirection:'row'}}>
-                                        <Text>男</Text>
-                                        <Text>></Text>
-                                    </View>
-                                }
-                            />
-                            }
-                        </View>
-                    ))}
-
-
-                    <View style={styles.subHeader}><Text style={styles.subheaderText}>图文列表带头像</Text></View>
-                    {data.single.avatarText.map((user, i) =>(
-                        <View>
-                            {i<=1 &&
-                            <List
-                                leftIcon={<Avatar src={user.avatar} size={50}/>}
-                                primaryText={user.primaryText}
-                                subText={user.secondaryText}
-                                subTextLines={1}
-                                total={2}
-                                index={i}
-                                isListBorder={true}
-                                rightIcon={
-                                    <View><Text>使用中</Text></View>
-                                }
-                            />
-                            }
-                        </View>
-                    ))}
-                    {data.single.avatarText.map((user, i) =>(
-                        <View>
-                            {i<=1 &&
-                            <List
-                                leftIcon={<Avatar src={user.avatar} size={64}/>}
-                                primaryText={user.primaryText}
-                                subText={user.secondaryText}
-                                subTextLines={2}
-                                index={i}
-                                rightIcon={
-                                    <View><Text>使用中</Text></View>
-                                }
-                            />
-                            }
-                            {i==2 &&
-                            <List
-                                leftIcon={<Avatar src={user.avatar} size={64}/>}
-                                primaryText={user.primaryText}
-                                subText={user.secondaryText}
-                                subTextLines={1}
-                                subTextMore={[{
-                                    text:'523万人在玩'
-                                }]}
-                                index={i}
-                            />
-                            }
-
-                            {i==3 &&
-                            <List
-                                leftIcon={
-                                    <View style={{flexDirection:'row'}}>
-                                        <Text style={{alignSelf:'center',marginRight:10}}>{i}</Text>
-                                        <Avatar src={user.avatar} size={64}/>
-                                    </View>
-                                }
-                                primaryText={user.primaryText}
-                                subText={user.secondaryText}
-                                subTextLines={1}
-                                subTextMore={
-                                    <Text style={{fontSize:12,color:'#a6a6a6',lineHeight:18}}><Text style={{color:'#ff8444'}}>523万</Text>人在玩</Text>
-                                }
-                                index={i}
-                            />
-                            }
-                        </View>
-                    ))}
-
-                </View>
-            </ScrollView>
-        );
+            <ListView
+                dataSource={this.state.dataSource}
+                renderRow={this._renderRow}
+            />
+        )
     }
 }
 
+
+
 const styles = StyleSheet.create({
-    contentContainer: {
-        backgroundColor:'rgba(255,255,255,1)'
-    },
-    container: {
-        marginTop:10
-    },
-
-    subHeader: {
-        height:44,
-        justifyContent: 'center',
-    },
-
-    subheaderText: {
-        color: '#000',
-        fontSize:16
-    },
-
-    demoContainer: {
-        height:42,
-        justifyContent: 'center',
-        backgroundColor: 'red',
-    },
 
     dot: {
         width:8,
         height:8,
         borderRadius:4,
-        backgroundColor:'blue'
+        backgroundColor:'red'
     },
     badge:{
         borderRadius:8,
-        backgroundColor:'blue',
+        backgroundColor:'red',
         height:16,
         overflow:'hidden',
     },
     badgeText: {
         fontSize:11,
+        paddingTop:1,
         color:'#fff',
         paddingLeft:6,
         paddingRight:6,
@@ -254,4 +106,3 @@ const styles = StyleSheet.create({
     },
 
 });
-

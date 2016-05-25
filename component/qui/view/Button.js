@@ -1,106 +1,161 @@
 import React, {
     Component,
+    PropTypes
+} from 'react';
+import {
     StyleSheet,
-    PropTypes,
     Text,
     TouchableOpacity,
-    View,
+    View
 } from 'react-native';
-import { THEME_NAME, SITE_NAME, STYLES } from '../style/Button.css';
+export const TypeName = ['default', 'auxiliary' ,'primary', 'danger', 'highlight', 'circle', 'circle-o'];
+export const SizeName = ['small', 'large'];
+import Styles from '../style/Button.css';
+/**
+ * Button Component
+ * @example
+ * <Button type="primary" value="确定" />
+ */
 export default class Button extends React.Component {
     /**
-     * 使用案例：
-     * <Button theme="primary" size="large" value="确定" onPress={func} />
-     * 组件参数说明：
-     * @param props.value ------- 按钮文本
-     * @param disabled={true} ------- 为true时，禁止点击状态
-     * @param props.theme ------- 按钮主题样式，三个可选参数：default(默认)、primary、danger
-     * @param props.size ------- 按钮大小，两个可选参数：small(默认)、large
-     * @param props.style ------- 自定义按钮样式
-     * @param props.styleText ------- 自定义按钮文本样式
-     * @param props.activeOpacity ------- 自定义按压态按钮的透明度（一般只有自定义的按钮才需要用到）
-     * @param props.onPress ------- 按钮触摸回调执行函数
-     * @param props.onPressIn ------- 按钮触碰回调执行函数
-     * @param props.onPressOut ------- 按钮触摸离开时回调执行函数
-     * @param props.onLongPress ------- 按钮长按回调执行函数
+     * This is Button constructor.
+     * @param {string} props.value ------- 按钮文本
+     * @param {boolean} [props.disabled=false] ------- 为true时，禁止点击状态
+     * @param {enum(TypeName)} props.type ------- 按钮主题样式，可选参数：default(默认)、auxiliary、primary、danger、highlight、circle、circle-o
+     * @param {enum(SizeName)} props.size ------- 按钮大小，两个可选参数：small(默认)、large
+     * @param {style} props.style ------- 自定义按钮样式
+     * @param {style} props.textStyle ------- 自定义按钮文本样式
+     * @param {style} props.activeStyle ------- 自定义按压态样式
+     * @param {style} props.activeTextStyle ------- 自定义按压态文本样式
+     * @param {function} [props.onPress] ------- 按钮触摸回调执行函数
+     * @param {function} [props.onPressIn] ------- 按钮触碰回调执行函数
+     * @param {function} [props.onPressOut] ------- 按钮触摸离开时回调执行函数
+     * @param {function} [props.onLongPress] ------- 按钮长按回调执行函数
+     * @param {string} [children.props.childpos] ------- 子节点位置：before、beforePress、after、afterPress
      */
     constructor(props) {
         super(props);
     }
     static defaultProps = {
         disabled: false,
-        theme: 'default',
+        type: 'default',
         size: 'small',
-        activeOpacity: 1,
     };
     static propTypes = {
         value: PropTypes.string.isRequired,
         disabled: PropTypes.bool,
-        theme: PropTypes.oneOf(THEME_NAME),
-        size: PropTypes.oneOf(SITE_NAME),
+        type: PropTypes.oneOf(TypeName),
+        size: PropTypes.oneOf(SizeName),
         style: Text.propTypes.style,
-        styleText: Text.propTypes.style,
-        activeOpacity: PropTypes.number,
+        textStyle: Text.propTypes.style,
+        activeStyle: Text.propTypes.style,
+        activeTextStyle: Text.propTypes.style,
         onPress: PropTypes.func,
         onPressIn: PropTypes.func,
         onPressOut: PropTypes.func,
         onLongPress: PropTypes.func,
     };
-    state = { buttonState: 'normal' };
+    state = { buttonState: 'Normal', customActive: false };
 
     render = () => {
         const {
             value,
             disabled,
-            theme,
+            type,
             size,
             style,
-            styleText,
-            activeOpacity,
+            textStyle,
+            activeStyle,
+            activeTextStyle,
             onPress,
             onPressIn,
             onPressOut,
             onLongPress,
+            children,
         } = this.props;
         const {
-            buttonState
+            buttonState,
+            customActive
             } = this.state;
 
-        _onPress = (callback) => {
-            if (this.props.onPress){
-                this.props.onPress();
-            }
+        _onPress = () => {
+            onPress ? onPress() : null
         }
         _onPressIn = () => {
-            this.setState({ buttonState: 'active' })
-            if (this.props.onPressIn){
-                this.props.onPressIn();
-            }
+            if (activeStyle) {
+                this.setState({ customActive: true })
+            } else {
+                this.setState({ buttonState: 'Active' })
+            }            
+            onPressIn ? onPressIn() : null
         }
         _onPressOut = () => {
-            this.setState({ buttonState: 'normal' })
-            if (this.props.onPressOut){
-                this.props.onPressOut();
+            if (activeStyle) {
+                this.setState({ customActive: false })
+            } else {
+                this.setState({ buttonState: 'Normal' })
             }
+            onPressOut ? onPressOut() : null
         }
         _onLongPress = () => {
-            if (this.props.onLongPress){
-                this.props.onLongPress();
-            }
+            onLongPress ? onLongPress() : null
         }
 
-        // style
-        let type = disabled ? 'disabled' : this.state.buttonState;
-        this.buttonStyleMap = STYLES;
-        let themeStyle = this.buttonStyleMap[theme+'Theme'][type];
-        let themeStyleText = this.buttonStyleMap[theme+'ThemeText'][type];
+        // type style
+        let state = disabled ? 'Disabled' : buttonState;
+        let typeStyle = Styles[type+'Type'+state];
+        let typeTextStyle = Styles[type+'TypeText'+state];
+        if ( type=='circle-o' ) {
+            typeStyle = Styles['circleLineType'+state];
+            typeTextStyle = Styles['circleLineTypeText'+state];
+        }
 
-        let sizeStyle = this.buttonStyleMap[size+'Size'];
-        let sizeStyleText = this.buttonStyleMap[size+'SizeText'];
+        // size style
+        let sizeStyle = Styles[size+'Size'];
+        let sizetextStyle = Styles[size+'SizeText'];
+        
+        // children 
+        var coalescedChildren = {}, beforeChild, afterChild;
+        React.Children.map(children, function (child,index) {
+            childPos = child.props['childpos'] ? child.props['childpos'] : index;
+            coalescedChildren[childPos] = child;
+            return coalescedChildren;
+        })
+        if ( buttonState=='Active' ){
+            beforeChild = coalescedChildren.beforePress ? coalescedChildren.beforePress : coalescedChildren.before;
+            afterChild = coalescedChildren.afterPress ? coalescedChildren.afterPress : coalescedChildren.after;
+        } else {
+            beforeChild = coalescedChildren.before;
+            afterChild = coalescedChildren.after;
+        }
+        // 默认显示所有chlidren
+        if ( !afterChild && !beforeChild ) {
+            beforeChild = children;
+        }
 
-        // touch
+        // all style
+        let containerStyles = [
+           Styles.default,
+           sizeStyle,
+           typeStyle,
+           style,
+           type=='circle' || type=='circle-o' ? Styles.circleType : null,
+           (type=='circle' || type=='circle-o') && size=='large' ? Styles.largeCircleSize : null,
+           customActive ? activeStyle : null,
+        ];
+        let textStyles = [
+           Styles.defaultText,
+           sizetextStyle,
+           typeTextStyle,
+           textStyle,
+           customActive ? activeTextStyle : null,
+           coalescedChildren.before && value ? {marginLeft: 6} : null,
+           coalescedChildren.after && value ? {marginRight: 6} : null,
+        ];
+
+        // touch event
         let touchableProps = {
-          activeOpacity: Number(this.props.activeOpacity)
+          activeOpacity: 1
         }
         if (!this.props.disabled){
             touchableProps.onPress = _onPress;
@@ -108,15 +163,17 @@ export default class Button extends React.Component {
             touchableProps.onPressOut = _onPressOut;
             touchableProps.onLongPress = _onLongPress;
         }
-        
+
         return (
             <TouchableOpacity
                 {...touchableProps}
-                style={[STYLES.default,themeStyle,sizeStyle,style]}
+                style={containerStyles}
             >
+                { beforeChild }
                 <Text
-                    style={[STYLES.defaultText,themeStyleText,sizeStyleText,styleText]} 
+                    style={textStyles}
                 >{value}</Text>
+                { afterChild }
             </TouchableOpacity>
         )
     }

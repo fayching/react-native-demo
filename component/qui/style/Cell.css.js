@@ -7,7 +7,6 @@ import Platform from 'Platform';
 import Dimensions from 'Dimensions';
 
 
-
 const deviceSize = Dimensions.get('window');
 const distance = deviceSize.width <= 320 ? 10 : 15;
 

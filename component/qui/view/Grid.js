@@ -5,6 +5,7 @@ import React, {
     View,
     Text,
     Image,
+    Dimensions,
 } from 'react-native';
 import styles from '../style/Grid.css';
 
@@ -15,24 +16,31 @@ export default class Grid extends Component {
     static defaultProps = {
     };
     static propTypes = {
-        imgHeight: PropTypes.number,
-        title: PropTypes.string,
-        text: PropTypes.string,
+        primaryText: PropTypes.string,
+        subText: PropTypes.string,
+        rows: PropTypes.number,
+        imgRatio: PropTypes.string,
+        imgType: PropTypes.string,
         imgUri: PropTypes.string,
     };
     state = {};
     render = () => {
         const {
-            title,
-            text,
+            primaryText,
+            subText,
             imgUri,
-            imgHeight,
+            imgRatio,
+            rows,
+            imgType,
             } = this.props;
+        let imgWidth = Dimensions.get('window').width/rows;
+        let imgHeight = imgWidth * imgRatio;
+
         return (
             <View style={styles.grid}>
                 {imgUri && <Image style={[styles.img,{height:imgHeight}]} source = {{uri: imgUri}}/>}
-                {title && <Text style={styles.title}>{title}</Text> }
-                {text &&  <Text style={styles.text}>{text}</Text> }
+                {primaryText && <Text style={styles.primaryText}>{primaryText}</Text> }
+                {subText &&  <Text style={styles.subText}>{subText}</Text> }
             </View>
         );
         
