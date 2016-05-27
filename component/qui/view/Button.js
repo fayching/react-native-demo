@@ -54,6 +54,7 @@ export default class Button extends React.Component {
         onPressIn: PropTypes.func,
         onPressOut: PropTypes.func,
         onLongPress: PropTypes.func,
+        elementStyles: PropTypes.object,
     };
     state = { buttonState: 'Normal', customActive: false };
 
@@ -86,7 +87,7 @@ export default class Button extends React.Component {
                 this.setState({ customActive: true })
             } else {
                 this.setState({ buttonState: 'Active' })
-            }            
+            }
             onPressIn ? onPressIn() : null
         }
         _onPressOut = () => {
@@ -113,8 +114,8 @@ export default class Button extends React.Component {
         // size style
         let sizeStyle = Styles[size+'Size'];
         let sizetextStyle = Styles[size+'SizeText'];
-        
-        // children 
+
+        // children
         var coalescedChildren = {}, beforeChild, afterChild;
         React.Children.map(children, function (child,index) {
             childPos = child.props['childpos'] ? child.props['childpos'] : index;
@@ -171,7 +172,8 @@ export default class Button extends React.Component {
             >
                 { beforeChild }
                 <Text
-                    style={textStyles}
+                    style={textStyles , elementStyles&&elementStyles.text}
+                     
                 >{value}</Text>
                 { afterChild }
             </TouchableOpacity>

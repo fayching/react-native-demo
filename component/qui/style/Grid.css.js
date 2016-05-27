@@ -1,6 +1,6 @@
 
 module.exports = require('react-native').StyleSheet.create({
-  grid:{
+  col:{
     flex: 1,
     borderColor: '#ccc',
     borderWidth: 1
@@ -13,11 +13,10 @@ module.exports = require('react-native').StyleSheet.create({
     fontSize: 16,
     height: 24
   },
-  text:{
+  subText:{
     color: '#777',
     fontSize: 14,
     height: 21
 
   },
 });
-

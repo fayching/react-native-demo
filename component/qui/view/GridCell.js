@@ -11,7 +11,7 @@ import styles from '../style/GridCell.css';
 export default class GridCell extends Component {
     constructor(props) {
         super(props);
-    }
+    };
     static defaultProps = {
       imgType: 'square'
     };
@@ -32,10 +32,12 @@ export default class GridCell extends Component {
             imgUri,
             imgType,
             imgRatio,
-            rows,
+            gridWidth,
             childrenStyles,
             } = this.props;
-          let imgWidth = Dimensions.get('window').width/rows;
+
+    	  gridWidth = gridWidth ? gridWidth : Dimensions.get('window').width;
+          let imgWidth = gridWidth /rows;
           if(imgType&&imgType='square'){
             imgRatio = 1;
           }else if (imgType&&imgType='vertical') {

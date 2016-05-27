@@ -5,7 +5,8 @@ import ButtonExample from '../../qui/demo/ButtonExample';
 import TypeExample from '../../qui/demo/TypeExample';
 import ListExample from '../../qui/demo/ListExample';
 import LayoutExample from '../../qui/demo/LayoutExample';
-import IconExample from '../../qui/demo/IconExample';
+// import IconExample from '../../qui/demo/IconExample';
+import GridExample from '../../qui/demo/GridExample';
 
 import React, {
     Component,
@@ -33,10 +34,14 @@ const exampleList = [
         "com": LayoutExample,
         "title": "Layout"
     },
+    // {
+    //     "com": IconExample,
+    //     "title": "Icon"
+    // },
     {
-        "com": IconExample,
-        "title": "Icon"
-    }
+        "com": GridExample,
+        "title": "Grid"
+    },
 ];
 
 class HomeList extends Component {

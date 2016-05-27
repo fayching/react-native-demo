@@ -11,23 +11,35 @@ import React, {
 
 import Subheader from '../view/Subheader';
 import Grid from '../view/Grid';
+import Col from '../view/Col';
 
 export default class GridExample extends Component{
 
     render() {
-    	return( 
-				<View>
-                    <Subheader text="网格"/>
-                    <View style={{flexDirection: 'row'}}>
-                        <Grid title="标题" text="内容" imgUri="http://qvas.xyz/vipstyle/mobile/client/cartoon/v2/pic/tribe/tribe1.png" imgHeight={100}/>
-                        <Grid title="标题2" text="内容2" imgUri="http://qvas.xyz/vipstyle/mobile/client/cartoon/v2/pic/tribe/tribe1.png"  imgHeight={100}/>
-                        <Grid title="标题3" text="内容3" imgUri="http://qvas.xyz/vipstyle/mobile/client/cartoon/v2/pic/tribe/tribe1.png"  imgHeight={100}/>
-                    </View>
-			        
-			      </View>
-			
+    	return(
+
+        <Grid style={{paddingTop:40,width: 200}}>
+            <Col span={50}>
+                <Text>box-1</Text>
+            </Col>
+            <Col span={50}>
+                <Text>box-2</Text>
+            </Col>
+            <Col span={33.333}>
+                <Text>box-1</Text>
+            </Col>
+            <Col span={33.333}>
+                <Text>box-2</Text>
+            </Col>
+            <Col span={33.333}>
+                <Text>box-1</Text>
+            </Col>
+            <Col span={33.333}>
+                <Text>box-2</Text>
+            </Col>
+
+        </Grid>
+
 		);
     }
 }
-
-
