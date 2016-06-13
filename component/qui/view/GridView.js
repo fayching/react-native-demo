@@ -41,6 +41,8 @@ export default class GridView extends React.Component {
 		let _children = Array.isArray(this.props.children)?this.props.children:[this.props.children];
         let children = _children.map((o, i)=>{
             return React.cloneElement(o,{ style: {height: 100}, key: i });
+            // {style:{[styles.col,{flex: 100/columns },{width: (width + spacing) * span/100},
+            // spacing && {marginRight: spacing}, elementStyles && elementStyles.col ]}});
         });
 
         return (
