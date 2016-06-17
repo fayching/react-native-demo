@@ -34,20 +34,19 @@ export default class GridView extends React.Component {
             width,
             columns,
             spacing,
+            data,
         } = this.props;
 
-        let colWidth = columns?(width + spacing)/columns;
-
-		let _children = Array.isArray(this.props.children)?this.props.children:[this.props.children];
-        let children = _children.map((o, i)=>{
-            return React.cloneElement(o,{ style: {height: 100}, key: i });
-            // {style:{[styles.col,{flex: 100/columns },{width: (width + spacing) * span/100},
-            // spacing && {marginRight: spacing}, elementStyles && elementStyles.col ]}});
-        });
+        let colWidth = (width + spacing)/columns;
 
         return (
             <Grid>
-                { this.props.children }
+                {data.map((item, index) =>{
+                    return (
+                        <Item {...item} key={index} width={colWidth} columns={columns} spacing={spacing} imgType={imgType} imgRatio={imgRatio} elementStyles={elementStyles}>
+                        </Item>
+                    )
+                })}
             </Grid>
         )
 	}
@@ -64,15 +63,16 @@ class Item extends React.Component{
     static propTypes = {
         elementStyles: PropTypes.object,
         width: PropTypes.string,
+        columns: PropTypes.number,
+        spacing: PropTypes.string,
+        imgType: PropTypes.oneOf(['square','vertical','horizontal']),
+        imgRatio: PropTypes.number,
         imgUri: PropTypes.string,
         primaryText: PropTypes.string,
         primaryTextLines: PropTypes.number,
         subText: PropTypes.string,
         subTextLines: PropTypes.number,
-        columns: PropTypes.number,
-        spacing: PropTypes.string,
-        imgType: PropTypes.oneOf(['square','vertical','horizontal']),
-        imgRatio: PropTypes.number,
+
     };
     render = () => {
         const {
@@ -108,4 +108,3 @@ class Item extends React.Component{
         )
     }
 }
-GridView.Item = Item;

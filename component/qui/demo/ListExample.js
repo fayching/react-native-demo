@@ -18,14 +18,16 @@ import Button from '../view/Button';
 export default class ListExample extends Component {
     constructor(props) {
         super(props);
+        console.log(Data);
         this._renderRow = this._renderRow.bind(this);
         this.state = {
             dataSource: new ListView.DataSource({
                 rowHasChanged: (row1, row2) => row1 !== row2,
             })
         };
-    }
 
+
+    }
     componentDidMount() {
         this.appInit();
     }
