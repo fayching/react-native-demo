@@ -7,6 +7,7 @@ import {
     View,
     Text,
     Image,
+    ListView,
     StyleSheet,
     Dimensions,
 } from 'react-native';
@@ -14,11 +15,60 @@ import {
 import styles from '../style/Grid.css';
 import Grid from './Grid';
 import Col from './Col';
+var Data = [
 
+    [{
+        'primaryText': '这是标题',
+        'subText': '这是内容这是内容这是内容这是内容这是内容这是内容这是内容',
+        'imgUri': "http://qvas.xyz/vipstyle/mobile/client/cartoon/v2/pic/tribe/tribe1.png",
+        'imgType': "square",
+    },
+    {
+        'primaryText': '这是标题2',
+        'subText': '这是内容这是内容这是内容这是内容这是内容这是内容这是内容',
+        'imgUri': "http://qvas.xyz/vipstyle/mobile/client/cartoon/v2/pic/tribe/tribe2.png",
+        'imgType': "square",
+    }],
+    [{
+        'primaryText': '这是标题',
+        'subText': '这是内容这是内容这是内容这是内容这是内容这是内容这是内容',
+        'imgUri': "http://qvas.xyz/vipstyle/mobile/client/cartoon/v2/pic/tribe/tribe1.png",
+        'imgType': "square",
+    },
+    {
+        'primaryText': '这是标题2',
+        'subText': '这是内容这是内容这是内容这是内容这是内容这是内容这是内容',
+        'imgUri': "http://qvas.xyz/vipstyle/mobile/client/cartoon/v2/pic/tribe/tribe2.png",
+        'imgType': "square",
+    }],
+    [{
+        'primaryText': '这是标题',
+        'subText': '这是内容这是内容这是内容这是内容这是内容这是内容这是内容',
+        'imgUri': "http://qvas.xyz/vipstyle/mobile/client/cartoon/v2/pic/tribe/tribe1.png",
+        'imgType': "square",
+    },
+    {
+        'primaryText': '这是标题2',
+        'subText': '这是内容这是内容这是内容这是内容这是内容这是内容这是内容',
+        'imgUri': "http://qvas.xyz/vipstyle/mobile/client/cartoon/v2/pic/tribe/tribe2.png",
+        'imgType': "square",
+    }],
+
+];
 export default class GridView extends React.Component {
+
     constructor(props) {
         super(props);
-    };
+        console.log(Data);
+        this._renderRow = this._renderRow.bind(this);
+        this.state = {
+            dataSource: new ListView.DataSource({
+                rowHasChanged: (row1, row2) => row1 !== row2,
+            })
+        };
+
+
+    }
     static defaultProps = {
         spacing: 0,
         width: Dimensions.get('window').width,
@@ -26,44 +76,47 @@ export default class GridView extends React.Component {
     static propTypes = {
         elementStyles: PropTypes.object,
     };
-    state = {};
-	render = () => {
-        const {
-            style,
-            elementStyles,
-            width,
-            columns,
-            spacing,
-            data,
-        } = this.props;
-
-        let colWidth = (width + spacing)/columns;
+    state = {
+    };
+    _renderRow(rowData: string, rowID: string) {
 
         return (
-            <Grid>
-                {data.map((item, index) =>{
+            <View rowID={rowID}>
+            {
+                rowData.map((item, index) =>{
                     return (
-                        <Item {...item} key={index} width={colWidth} columns={columns} spacing={spacing} imgType={imgType} imgRatio={imgRatio} elementStyles={elementStyles}>
+                        <Item {...item} key={index}>
                         </Item>
                     )
                 })}
-            </Grid>
+            }
+
+            </View>
+
+        );
+    }
+    render() {
+        return (
+            <ListView
+                dataSource={this.state.dataSource}
+                renderRow={this._renderRow}
+            />
         )
-	}
+    }
 }
+
 class Item extends React.Component{
     constructor(props) {
         super(props);
     };
     static defaultProps = {
-        imgRatio: 1,
+        imgType: 'square',
         primaryTextLines: 1,
         subTextLines: 1,
     };
     static propTypes = {
         elementStyles: PropTypes.object,
         width: PropTypes.string,
-        columns: PropTypes.number,
         spacing: PropTypes.string,
         imgType: PropTypes.oneOf(['square','vertical','horizontal']),
         imgRatio: PropTypes.number,
@@ -90,7 +143,7 @@ class Item extends React.Component{
         } = this.props;
         let imgHeight;
         let ratio = imgRatio;
-        if(imgType&&imgType=='square'){
+        if(imgType=='square'){
             ratio = 1;
         }else if (imgType&&imgType=='vertical') {
             ratio = 7/10;
@@ -99,12 +152,12 @@ class Item extends React.Component{
         }
         imgHeight = width * ratio;
         return (
-            <Col>
+            <View>
                 {imgUri && <Image style={[styles.img,{width: width}, {height: imgHeight}, elementStyles && elementStyles.img]} source = {{uri: imgUri}}/>}
                 {primaryText && <Text style={styles.primaryText, elementStyles && elementStyles.primaryText} numberOfLines={primaryTextLines}>{primaryText}</Text> }
                 {subText &&  <Text style={styles.subText, elementStyles && elementStyles.subText} numberOfLines={subTextLines}>{subText}</Text> }
                 {this.props.children}
-            </Col>
+            </View>
         )
     }
 }
