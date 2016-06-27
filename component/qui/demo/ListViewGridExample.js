@@ -26,7 +26,7 @@ var THUMB_URLS = [
   require('../pic/cover3.jpg'),
 ];
 
-var ListViewGridView = React.createClass({
+var ListViewGridExample = React.createClass({
 
   statics: {
     title: '<ListView> - Grid Layout',
@@ -133,4 +133,4 @@ var styles = StyleSheet.create({
   },
 });
 
-module.exports = ListViewGridView;
+module.exports = ListViewGridExample;
