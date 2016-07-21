@@ -1,15 +1,17 @@
-'use strict';
+import React, {
+    Component,
+    PropTypes
+} from 'react';
+import {
+    Image,
+    StyleSheet,
+    Text,
+    View,
+    TouchableOpacity,
+    TouchableHighlight,
 
-var React = require('react');
-var ReactNative = require('react-native');
-var {
-  Image,
-  ListView,
-  TouchableHighlight,
-  StyleSheet,
-  Text,
-  View,
-} = ReactNative;
+} from 'react-native';
+
 
 var THUMB_URLS = [
   require('../pic/cover1.jpg'),
@@ -25,13 +27,17 @@ var THUMB_URLS = [
   require('../pic/cover2.jpg'),
   require('../pic/cover3.jpg'),
 ];
+export default class ListViewGridView extends React.Component {
 
-var ListViewGridView = React.createClass({
-
-  statics: {
-    title: '<ListView> - Grid Layout',
-    description: 'Flexbox grid layout.'
-  },
+    constructor(props) {
+        super(props);
+    }
+    static defaultProps = {
+        disabled: false,
+        type: 'default',
+        size: 'small',
+    };
+  
 
   getInitialState: function() {
     var ds = new ListView.DataSource({rowHasChanged: (r1, r2) => r1 !== r2});
@@ -114,7 +120,7 @@ var styles = StyleSheet.create({
     justifyContent: 'center',
     padding: 5,
     margin: 3,
-    width: 100,
+    width: 400,
     height: 100,
     backgroundColor: '#F6F6F6',
     alignItems: 'center',
@@ -123,7 +129,7 @@ var styles = StyleSheet.create({
     borderColor: '#CCC'
   },
   thumb: {
-    width: 64,
+    width: 204,
     height: 64
   },
   text: {

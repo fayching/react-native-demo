@@ -8,15 +8,18 @@ module.exports = require('react-native').StyleSheet.create({
   img:{
     flex: 1,
   },
-  title:{
+  primaryText:{
     color: '#000',
     fontSize: 16,
-    height: 24
+    height: 24,
+    marginLeft: 10,
+    marginTop: 6,
   },
   subText:{
     color: '#777',
-    fontSize: 14,
-    height: 21
-
+    fontSize: 16,
+    height: 24,
+    marginLeft: 10,
+    marginBottom: 26,
   },
 });

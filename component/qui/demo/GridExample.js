@@ -5,87 +5,73 @@
 import React, {
     Component,
     View,
+    ListView,
     Text,
     StyleSheet,
+    PixelRatio,
+    Dimensions,
 } from 'react-native';
 
+import Data from './gridDataSource';
 import Subheader from '../view/Subheader';
 import Grid from '../view/Grid';
 import Col from '../view/Col';
-import GridView from '../view/GridView';
-
-var Data = [
-
-    [{
-        'primaryText': '这是标题',
-        'subText': '这是内容这是内容这是内容这是内容这是内容这是内容这是内容',
-        'imgUri': "http://qvas.xyz/vipstyle/mobile/client/cartoon/v2/pic/tribe/tribe1.png",
-        'imgType': "square",
-    },
-    {
-        'primaryText': '这是标题2',
-        'subText': '这是内容这是内容这是内容这是内容这是内容这是内容这是内容',
-        'imgUri': "http://qvas.xyz/vipstyle/mobile/client/cartoon/v2/pic/tribe/tribe2.png",
-        'imgType': "square",
-    }],
-    [{
-        'primaryText': '这是标题',
-        'subText': '这是内容这是内容这是内容这是内容这是内容这是内容这是内容',
-        'imgUri': "http://qvas.xyz/vipstyle/mobile/client/cartoon/v2/pic/tribe/tribe1.png",
-        'imgType': "square",
-    },
-    {
-        'primaryText': '这是标题2',
-        'subText': '这是内容这是内容这是内容这是内容这是内容这是内容这是内容',
-        'imgUri': "http://qvas.xyz/vipstyle/mobile/client/cartoon/v2/pic/tribe/tribe2.png",
-        'imgType': "square",
-    }],
-    [{
-        'primaryText': '这是标题',
-        'subText': '这是内容这是内容这是内容这是内容这是内容这是内容这是内容',
-        'imgUri': "http://qvas.xyz/vipstyle/mobile/client/cartoon/v2/pic/tribe/tribe1.png",
-        'imgType': "square",
-    },
-    {
-        'primaryText': '这是标题2',
-        'subText': '这是内容这是内容这是内容这是内容这是内容这是内容这是内容',
-        'imgUri': "http://qvas.xyz/vipstyle/mobile/client/cartoon/v2/pic/tribe/tribe2.png",
-        'imgType': "square",
-    }],
-
-];
-
-export default class GridExample extends Component{
+import LayoutStyles from '../style/Layout.css';
+import GridCell from '../view/GridCell';
 
 
-    render() {
+export default class GridExample extends Component {
+    constructor(props) {
+        super(props);
+        console.log(Data);
+        this._renderRow = this._renderRow.bind(this);
+        this.state = {
+            dataSource: new ListView.DataSource({
+                rowHasChanged: (row1, row2) => row1 !== row2,
+            })
+        };
 
-    	return(
-            <View>
-                <Grid style={{paddingTop:40,width: 200}}>
-                    <Col span={50}>
-                        <Text>box-1</Text>
-                    </Col>
-                    <Col span={50}>
-                        <Text>box-2</Text>
-                    </Col>
-                    <Col span={33.333}>
-                        <Text>box-1</Text>
-                    </Col>
-                    <Col span={33.333}>
-                        <Text>box-2</Text>
-                    </Col>
-                    <Col span={33.333}>
-                        <Text>box-1</Text>
-                    </Col>
-                    <Col span={33.333}>
-                        <Text>box-2</Text>
-                    </Col>
 
-                </Grid>
-                <GridView columns={2}  imgType={"square"} data={Data}>
-                </GridView>
-            </View>
-		);
+    }
+    componentDidMount() {
+        this.appInit();
+    }
+
+    appInit(){
+        var that = this;
+        that.setState({
+            dataSource: that.state.dataSource.cloneWithRows(Data)
+        });
+    }
+
+
+    _renderRow(rowData: string, sectionID: number, rowID: string) {
+        let width = Dimensions.get('window').width/3;
+        return (
+
+            <GridCell
+                imgUri={rowData.imgUri}
+                imgType ={'vertical'}
+                width = {width - 4}
+                spacing = {(rowID+1)%3 == 0 ?  0 :   4}
+
+                primaryText={rowData.primaryText}
+                primaryTextLines={1}
+                subText={rowData.subText}
+                subTextLines={2}
+                rowID={rowID}
+                total={this.state.dataSource._cachedRowCount}
+            />
+        );
+    }
+
+
+    render = () => {
+        return (
+            <ListView contentContainerStyle={LayoutStyles.flexWrap}
+                dataSource={this.state.dataSource}
+                renderRow={this._renderRow}
+            />
+        )
     }
 }

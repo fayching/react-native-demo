@@ -1,38 +1,61 @@
 module.exports = require('react-native').StyleSheet.create({
-  base:{
-    color: '#000',
-    lineHeight: 24,
-    fontSize: 16,
+  leftTop:{
+    flexDirection:'row',
+    justifyContent: 'flex-start',
   },
-  textInfoColor:{
-    color: '#777'
+  centerTop:{
+    flexDirection:'row',
+    justifyContent: 'center',
   },
-  textMutedColor:{
-    color: '#bbb'
+  rightTop:{
+    flexDirection:'row',
+    justifyContent: 'flex-end',
   },
-  lineHeightDefault:{
-    lineHeight: 24
+  leftCenter:{
+    flexDirection:'row',
+    alignItems: 'center',
+    justifyContent: 'flex-start',
   },
-  lineHeightBar:{
-    lineHeight: 44
+  center:{
+    flexDirection:'row',
+    alignItems: 'center',
+    justifyContent: 'center',
   },
-  fontSizeDefault:{
-    fontSize: 16
+  rightCenter:{
+    flexDirection:'row',
+    alignItems: 'center',
+    justifyContent: 'flex-end',
   },
-  fontSizeH1:{
-    fontSize: 18
+  leftBottom:{
+    flexDirection:'row',
+    alignItems: 'flex-end',
+    justifyContent: 'flex-start',
   },
-  fontSizeH2:{
-    fontSize: 17
+  centerBottom:{
+    flexDirection:'row',
+    alignItems: 'flex-end',
+    justifyContent: 'center',
   },
-  fontSizeH3:{
-    fontSize: 16
+  rightBottom:{
+    flexDirection:'row',
+    alignItems: 'flex-end',
+    justifyContent: 'flex-end',
   },
-  fontSizeSubText:{
-    fontSize: 14
+  spaceBetween:{
+    flexDirection:'row',
+    justifyContent: 'space-between',
   },
-  fontSizeTips:{
-    fontSize: 12
+  spaceAround:{
+    flexDirection:'row',
+    justifyContent: 'space-around',
   },
+  flexWrap:{
+    flexDirection:'row',
+    flexWrap:'wrap',
+  },
+  flexNoWrap:{
+    flexDirection:'row',
+    flexWrap:'nowrap',
+  }
 });
 

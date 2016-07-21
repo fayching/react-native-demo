@@ -114,7 +114,7 @@ var styles = StyleSheet.create({
     justifyContent: 'center',
     padding: 5,
     margin: 3,
-    width: 100,
+    width: 200,
     height: 100,
     backgroundColor: '#F6F6F6',
     alignItems: 'center',
